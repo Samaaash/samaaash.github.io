@@ -17,7 +17,7 @@
 </head>
 <body>
   <div id="chatbox">
-    <h2>Chat with GPT</h2>
+    <h2>Astra</h2>
     <div id="messages"></div>
     <textarea id="userInput" rows="3" placeholder="Type your message..."></textarea><br>
     <button onclick="sendMessage()">Send</button>
@@ -31,7 +31,7 @@
     function addMessage(role, text) {
       const div = document.createElement("div");
       div.className = "msg " + role;
-      div.innerText = `${role === 'user' ? 'You' : 'Bot'}: ${text}`;
+      div.innerText = `${role === 'user' ? 'You' : 'Chatbot'}: ${text}`;
       document.getElementById("messages").appendChild(div);
       document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
     }
@@ -48,7 +48,7 @@
         ? "You are a reserved, thoughtful assistant who mirrors the user's tone subtly and answers with introspective depth."
         : "You are an enthusiastic, expressive assistant who mirrors the user's excitement and engages warmly with encouragement.";
 
-      const response = await fetch("https://303fdccc-8ec2-4a46-8765-847d89b7123c-00-1poyvuwy1ydr3.spock.replit.dev/", {
+      const response = await fetch("https://303fdccc-8ec2-4a46-8765-847d89b7123c-00-1poyvuwy1ydr3.spock.replit.dev/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
