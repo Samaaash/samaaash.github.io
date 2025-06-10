@@ -5,22 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Qualtrics GPT Chatbot</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
-    #chatbox { max-width: 600px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    .msg { margin: 10px 0; }
-    .user { color: blue; }
-    .bot { color: green; }
-    #messages { max-height: 400px; overflow-y: auto; margin-bottom: 10px; }
-    textarea { width: 100%; padding: 10px; }
-    button { padding: 10px 15px; margin-top: 5px; }
+    body { font-family: 'Segoe UI', sans-serif; padding: 0; margin: 0; background: #eef1f5; display: flex; align-items: center; justify-content: center; height: 100vh; }
+    #chatbox { width: 400px; max-height: 90vh; background: #ffffff; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow: hidden; }
+    #messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+    .msg { padding: 10px 15px; border-radius: 20px; max-width: 75%; line-height: 1.4; white-space: pre-wrap; word-break: break-word; }
+    .user { align-self: flex-end; background-color: #dcf8c6; }
+    .bot { align-self: flex-start; background-color: #f1f0f0; }
+    #inputArea { display: flex; padding: 10px; border-top: 1px solid #ddd; background: #fff; }
+    #userInput { flex: 1; border: none; resize: none; padding: 10px; font-size: 1rem; border-radius: 20px; background: #f5f5f5; margin-right: 10px; }
+    #userInput:focus { outline: none; background: #fff; }
+    button { background: #007bff; color: white; border: none; border-radius: 20px; padding: 10px 20px; cursor: pointer; }
+    button:hover { background: #0056b3; }
   </style>
 </head>
 <body>
   <div id="chatbox">
-    <h2>Astra</h2>
     <div id="messages"></div>
-    <textarea id="userInput" rows="3" placeholder="Type your message..."></textarea><br>
-    <button onclick="sendMessage()">Send</button>
+    <div id="inputArea">
+      <textarea id="userInput" rows="1" placeholder="Type your message..."></textarea>
+      <button onclick="sendMessage()">Send</button>
+    </div>
   </div>
 
   <script>
@@ -31,7 +35,7 @@
     function addMessage(role, text) {
       const div = document.createElement("div");
       div.className = "msg " + role;
-      div.innerText = `${role === 'user' ? 'You' : 'Chatbot'}: ${text}`;
+      div.innerText = text;
       document.getElementById("messages").appendChild(div);
       document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
     }
@@ -66,14 +70,6 @@
       const botText = data.choices?.[0]?.message?.content || "Error.";
       messages.push({ role: "assistant", content: botText });
       addMessage("bot", botText);
-
-      // Save log to Google Sheets or DB through webhook
-      // Disabled for now to avoid errors without a real endpoint
-      // fetch("https://hook.us1.make.com/your-webhook-id", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ sessionID, messages })
-      // });
     }
   </script>
 </body>
